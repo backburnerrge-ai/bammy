@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1st Monthsary & Valentine's</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', cursive;
+        }
+        body {
+            min-height: 100vh;
+            background: #d62828; /* Red background */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 20px;
+        }
+        /* Floating decorations - Tulips instead of hearts */
+        .decor {
+            position: absolute;
+            opacity: 0;
+            animation: float 6s linear infinite;
+            font-size: 24px; /* Tulip emoji size */
+        }
+        /* Header with pop-up animation */
+        .cute-header {
+            font-size: 2.5rem;
+            color: #fff;
+            margin-bottom: 3rem;
+            text-shadow: 0 0 15px #ffccd5;
+            animation: popUp 1.5s ease-out forwards;
+            opacity: 0;
+            transform: scale(0.5);
+        }
+        .cute-header span {
+            display: block;
+            font-size: 1.8rem;
+            margin-top: 5px;
+            animation: popUp 1.5s ease-out 0.5s forwards;
+            opacity: 0;
+            transform: scale(0.5);
+        }
+        /* YES/NO Buttons */
+        .btn-container {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            animation: popUp 1.5s ease-out 1s forwards;
+            opacity: 0;
+            transform: scale(0.5);
+        }
+        .choice-btn {
+            padding: 1.5rem 3rem;
+            font-size: 2rem;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f72585;
+            color: white;
+        }
+        #yesBtn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #ffccd5;
+        }
+        #noBtn {
+            background: #ff4d6d;
+        }
+        #noBtn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #ffccd5;
+        }
+        /* Full message with pop-up animation per line */
+        .full-message {
+            font-size: 1.2rem;
+            color: #333;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 204, 213, 0.5);
+            line-height: 1.6;
+            max-width: 320px;
+            display: none;
+            text-align: center;
+        }
+        .full-message p {
+            margin: 10px 0;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: popUp 0.8s ease-out forwards;
+        }
+        /* Crying emojis animation */
+        .cry-emoji {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0;
+            animation: cryFall 3s linear forwards;
+        }
+        /* Keyframes */
+        @keyframes cryFall {
+            0% {
+                transform: translateY(-20vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(0.6);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-20vh) scale(1.2);
+                opacity: 0;
+            }
+        }
+        @keyframes popUp {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            70% {
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cute-header">💖 MY BAMMY 💖<span>1st Monthsary x Valentine's</span></div>
+    
+    <div class="btn-container" id="btnContainer">
+        <button class="choice-btn" id="yesBtn">YES</button>
+        <button class="choice-btn" id="noBtn">NO</button>
+    </div>
+
+    <div class="full-message" id="fullMsg">
+        <p style="animation-delay: 0.2s;">Hi bammy, Happy 1st Monthsary and Happy Valentines Day🥰🥰.</p>
+        <p style="animation-delay: 0.4s;">Grabe from crush to papansin to kabet(😭😭) to lovers. Na remember ko pa su mga time na nag papapansin ako saimo through notes sa messenger tapos nag react ka HAHHAAHHAHAHA.</p>
+        <p style="animation-delay: 0.6s;">Thank you kasi pinansin mo ako wala ka sanang mabait na girlfriend, joke. Thank you so much kasi lagi kang andyan para sakin, pag wala na akong allowance ikaw nag papakain sakin😭😭, na para bang nanay na kita HAHAHHAHAHAHA.</p>
+        <p style="animation-delay: 0.8s;">Anyway no drama drama na, gusto ko lagi mong tatandaan na andito lang ako lagi para sayo, kung malungkot ka papatawanin kita hanggang sa maging kana ulit🤪🤪. Feel ko 'di mo na naiintindihan mga inaano ko HAHAHAHAHAH.</p>
+        <p style="animation-delay: 1s;">YOU DESERVE ALL THE LOVE BAMMY!! I LOVE YOU SOOOOOOOO MUCH!!MWAAAAPSS😚</p>
+    </div>
+
+    <script>
+        // Floating pink tulips (using tulip emoji)
+        function createDecor() {
+            const decor = document.createElement('div');
+            decor.classList.add('decor');
+            decor.textContent = '🌷'; // Pink tulip emoji
+            decor.style.left = `${Math.random() * 100}vw`;
+            decor.style.animationDelay = `${Math.random() * 5}s`;
+            decor.style.animationDuration = `${5 + Math.random() * 5}s`;
+            document.body.appendChild(decor);
+            setTimeout(() => decor.remove(), 6000);
+        }
+        setInterval(createDecor, 300);
+
+        // YES Button Action
+        document.getElementById('yesBtn').addEventListener('click', () => {
+            document.getElementById('btnContainer').style.display = 'none';
+            document.getElementById('fullMsg').style.display = 'block';
+        });
+
+        // NO Button Action
+        document.getElementById('noBtn').addEventListener('click', () => {
+            function createCryEmoji() {
+                const emoji = document.createElement('div');
+                emoji.classList.add('cry-emoji');
+                emoji.textContent = '😭';
+                emoji.style.left = `${Math.random() * 100}vw`;
+                emoji.style.animationDuration = `${2 + Math.random() * 2}s`;
+                document.body.appendChild(emoji);
+                setTimeout(() => emoji.remove(), 3000);
+            }
+
+            let emojiInterval = setInterval(createCryEmoji, 100);
+            setTimeout(() => clearInterval(emojiInterval), 2000);
+        });
+    </script>
+</body>
+</html>
