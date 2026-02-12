@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bammy - 1st Monthsary & Valentine's</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', cursive;
+        }
+        body {
+            min-height: 100vh;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        /* HEART PAGE STYLES - SIGURADONG GUMAGALAW */
+        #heart-page {
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+        }
+        .heart-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            transition: transform 0.3s ease;
+        }
+        .heart-container:hover {
+            transform: scale(1.1);
+        }
+        .heart {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #ff69b4 0%, #c2185b 100%);
+            clip-path: path('M100,20 C120,0 180,0 200,20 C220,40 220,80 200,100 C180,120 140,160 100,200 C60,160 20,120 0,100 C-20,80 -20,40 0,20 C20,0 80,0 100,20 Z');
+            position: absolute;
+            opacity: 0.8;
+            transform: scale(1);
+        }
+
+        /* MESSAGE PAGE STYLES */
+        #message-page {
+            background: #800020;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.1) 0px, rgba(255,255,255,0.1) 2px, transparent 2px, transparent 10px);
+            background-blend-mode: overlay;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .volume-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            background: transparent;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            z-index: 5;
+        }
+        .decor {
+            position: absolute;
+            opacity: 0;
+            animation: float 6s linear infinite;
+            font-size: 32px;
+            z-index: 2;
+        }
+        .cute-header {
+            font-size: 2.5rem;
+            color: #fff;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: popUp 1.5s ease-out forwards;
+            opacity: 0;
+            transform: scale(0.5);
+            letter-spacing: 2px;
+            text-transform: capitalize;
+            border-bottom: 2px solid #f8bbd0;
+            padding-bottom: 15px;
+            z-index: 2;
+            text-align: center;
+        }
+        .cute-header span {
+            display: block;
+            font-size: 1.8rem;
+            margin-top: 10px;
+            animation: popUp 1.5s ease-out 0.5s forwards;
+            opacity: 0;
+            transform: scale(0.5);
+            letter-spacing: 1.5px;
+            font-style: italic;
+        }
+        .btn-container {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            animation: popUp 1.5s ease-out 1s forwards;
+            opacity: 0;
+            transform: scale(0.5);
+            z-index: 2;
+        }
+        .choice-btn {
+            padding: 1.2rem 2.5rem;
+            font-size: 2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #c2185b;
+            color: white;
+            box-shadow: 3px 3px 0px #5d001e;
+            letter-spacing: 1px;
+        }
+        #yesBtn:hover {
+            transform: scale(1.05);
+            background: #ad1457;
+            box-shadow: 4px 4px 0px #5d001e;
+        }
+        #noBtn {
+            background: #d81b60;
+        }
+        #noBtn:hover {
+            transform: scale(1.05);
+            background: #c2185b;
+            box-shadow: 4px 4px 0px #5d001e;
+        }
+        .full-message {
+            font-size: 1.2rem;
+            color: #212121;
+            background: rgba(255, 248, 240, 0.9);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 5px 5px 0px rgba(0,0,0,0.3);
+            line-height: 1.8;
+            max-width: 400px;
+            display: none;
+            text-align: center;
+            border: 1px solid #a0522d;
+            z-index: 2;
+        }
+        .full-message p {
+            margin: 10px 0;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: popUp 0.8s ease-out forwards;
+            letter-spacing: 0.5px;
+        }
+        .cry-emoji {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0;
+            animation: cryFall 3s linear forwards;
+            z-index: 2;
+        }
+
+        /* KEYFRAMES - PARA GUMALAW NG MAAYOS */
+        @keyframes cryFall {
+            0% { transform: translateY(-20vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0.8); opacity: 0.8; }
+            100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+        }
+        @keyframes popUp {
+            0% { opacity: 0; transform: scale(0.5); }
+            70% { transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- AUDIO SECTION - MAY DALAWANG LINK PARA SIGURADO -->
+    <audio id="bg-music" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/25/audio_1b5f1a3a1f.mp3?filename=soft-piano-100-bpm-121525.mp3" type="audio/mpeg">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    
+
+    <!-- HEART PAGE - SIGURADONG GUMAGALAW -->
+    <div id="heart-page">
+        <div class="heart-container">
+            <div class="heart"></div>
+        </div>
+    </div>
+
+    <!-- MESSAGE PAGE -->
+    <div id="message-page">
+        <button class="volume-control" id="volumeBtn">🔊</button>
+
+        <div class="cute-header">💖 My Bammy 💖<span>1st Monthsary & Valentine's Day</span></div>
+        
+        <div class="btn-container" id="btnContainer">
+            <button class="choice-btn" id="yesBtn">YES</button>
+            <button class="choice-btn" id="noBtn">NO</button>
+        </div>
+
+        <div class="full-message" id="fullMsg">
+            <p style="animation-delay: 0.2s;">Hi bammy, Happy 1st Monthsary and Happy Valentines Day🥰🥰.</p>
+            <p style="animation-delay: 0.4s;">Grabe from crush to papansin to kabet(😭😭) to lovers. Na remember ko pa su mga time na nag papapansin ako saimo through notes sa messenger tapos nag react ka HAHHAAHHAHAHA.</p>
+            <p style="animation-delay: 0.6s;">Thank you kasi pinansin mo ako wala ka sanang mabait na girlfriend, joke. Thank you so much kasi lagi kang andyan para sakin, pag wala na akong allowance ikaw nag papakain sakin😭😭, na para bang nanay na kita HAHAHHAHAHAHA.</p>
+            <p style="animation-delay: 0.8s;">Anyway no drama drama na, gusto ko lagi mong tatandaan na andito lang ako lagi para sayo, kung malungkot ka papatawanin kita hanggang sa maging kana ulit🤪🤪. Feel ko 'di mo na naiintindihan mga inaano ko HAHAHAHAHAH.</p>
+            <p style="animation-delay: 1s;">YOU DESERVE ALL THE LOVE BAMMY!! I LOVE YOU SOOOOOOOO MUCH!!MWAAAAPSS😚</p>
+        </div>
+    </div>
+
+    <!-- SCRIPTS - PARA GUMAGALAW ANG PUSO AT GUMANA ANG MUSIC -->
+    <script>
+        // POLYFILL - PARA GUMANA ANG ANIMATION SA LAHAT NG BROWSER
+        (function () {
+            let b = 0;
+            let c = ["ms", "moz", "webkit", "o"];
+            for (let a = 0; a < c.length && !window.requestAnimationFrame; ++a) {
+                window.requestAnimationFrame = window[c[a] + "RequestAnimationFrame"];
+                window.cancelAnimationFrame = window[c[a] + "CancelRequestAnimationFrame"] || window[c[a] + "CancelAnimationFrame"];
+            }
+            if (!window.requestAnimationFrame) {
+                window.requestAnimationFrame = function (h) {
+                    let d = new Date().getTime();
+                    let f = Math.max(0, 16 - (d - b));
+                    let g = window.setTimeout(() => h(d + f), f);
+                    b = d + f;
+                    return g;
+                };
+            }
+            if (!window.cancelAnimationFrame) {
+                window.cancelAnimationFrame = function (d) { clearTimeout(d); };
+            }
+        })();
+
+        // HEART ANIMATION LOGIC - SIGURADONG GALAWIN
+        const heart = document.querySelector('.heart');
+        let scale = 1;
+        let growing = true;
+
+        function animateHeart() {
+            if (growing) {
+                scale += 0.01;
+                if (scale >= 1.2) growing = false;
+            } else {
+                scale -= 0.01;
+                if (scale <= 0.8) growing = true;
+            }
+            heart.style.transform = `scale(${scale})`;
+            heart.style.opacity = scale;
+            requestAnimationFrame(animateHeart);
+        }
+        animateHeart(); // PINAPASIMULA ANG ANIMATION
+
+        // SWITCH TO MESSAGE PAGE + PLAY MUSIC
+        document.getElementById('heart-page').addEventListener('click', () => {
+            const audio = document.getElementById('bg-music');
+            audio.play().catch(err => {
+                alert("Please enable audio para marinig ang music! 😊");
+            });
+            document.getElementById('heart-page').style.display = 'none';
+        });
+
+        // VOLUME CONTROL
+        const volumeBtn = document.getElementById('volumeBtn');
+        const audio = document.getElementById('bg-music');
+        let isMuted = false;
+        volumeBtn.addEventListener('click', () => {
+            isMuted = !isMuted;
+            audio.muted = isMuted;
+            volumeBtn.textContent = isMuted ? "🔇" : "🔊";
+        });
+
+        // FLOATING TULIPS
+        function createDecor() {
+            const decor = document.createElement('div');
+            decor.classList.add('decor');
+            decor.textContent = '🌷';
+            decor.style.left = `${Math.random() * 100}vw`;
+            decor.style.animationDelay = `${Math.random() * 5}s`;
+            decor.style.animationDuration = `${5 + Math.random() * 5}s`;
+            document.getElementById('message-page').appendChild(decor);
+            setTimeout(() => decor.remove(), 6000);
+        }
+        setInterval(createDecor, 300);
+
+        // YES BUTTON ACTION
+        document.getElementById('yesBtn').addEventListener('click', () => {
+            document.getElementById('btnContainer').style.display = 'none';
+            document.getElementById('fullMsg').style.display = 'block';
+        });
+
+        // NO BUTTON ACTION
+        document.getElementById('noBtn').addEventListener('click', () => {
+            function createCryEmoji() {
+                const emoji = document.createElement('div');
+                emoji.classList.add('cry-emoji');
+                emoji.textContent = '😭';
+                emoji.style.left = `${Math.random() * 100}vw`;
+                emoji.style.animationDuration = `${2 + Math.random() * 2}s`;
+                document.getElementById('message-page').appendChild(emoji);
+                setTimeout(() => emoji.remove(), 3000);
+            }
+            let emojiInterval = setInterval(createCryEmoji, 100);
+            setTimeout(() => clearInterval(emojiInterval), 2000);
+        });
+    </script>
+</body>
+  </html>
+  
